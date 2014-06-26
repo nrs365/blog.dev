@@ -10,8 +10,8 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('/home', function (){
-    return 'This is my homepage.';
+Route::get('/', function (){
+    return View::make('temp.my_first_view');
 });
 
 Route::get('/resume', function () {
@@ -22,8 +22,29 @@ Route::get('/portfolio', function () {
     return 'This is my portfolio.';
 });
 
+Route::get('/sayhello/{name}', function($name)
+{
+    if ($name == "Chris")
+    {
+        return Redirect::to('/');
+    }
+    else
+    {
+        $data = array('name' => $name);
+        return View::make('my_first_view')->with($data);
+    }
+});
 
-// Route::get('/sayHello/{name}', function($name)
+Route::get('/roll_dice/{guess}', function($guess) {
+    $random = rand(1,6);
+    $data = array (
+        'random' => $random,
+        'guess' => $guess    
+        );
+    return View::make('temp.roll_dice')->with($data);
+});
+
+// Route::get('/sayHello/{named}', function($name)
 // {
 //     if ($name == "Chris")
 //     {
