@@ -10,8 +10,27 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
-Route::get('/', function()
-{
-	return View::make('hello');
+Route::get('/home', function (){
+    return 'This is my homepage.';
 });
+
+Route::get('/resume', function () {
+    return 'This is my resume.';
+});
+
+Route::get('/portfolio', function () {
+    return 'This is my portfolio.';
+});
+
+
+// Route::get('/sayHello/{name}', function($name)
+// {
+//     if ($name == "Chris")
+//     {
+//         return Redirect::to('/');
+//     }
+//     else
+//     {
+//         return "Hello, $name!";
+//     }
+// });
