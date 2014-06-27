@@ -15,11 +15,11 @@ Route::get('/', function (){
 });
 
 Route::get('/resume', function () {
-    return 'This is my resume.';
+    return View::make('temp.resume');
 });
 
 Route::get('/portfolio', function () {
-    return 'This is my portfolio.';
+    return View::make('temp.portfolio');
 });
 
 Route::get('/sayhello/{name}', function($name)
@@ -31,7 +31,7 @@ Route::get('/sayhello/{name}', function($name)
     else
     {
         $data = array('name' => $name);
-        return View::make('my_first_view')->with($data);
+        return View::make('temp.my_first_view')->with($data);
     }
 });
 
@@ -40,7 +40,7 @@ Route::get('/roll_dice/{guess}', function($guess) {
     $data = array (
         'random' => $random,
         'guess' => $guess    
-        );
+    );
     return View::make('temp.roll_dice')->with($data);
 });
 
