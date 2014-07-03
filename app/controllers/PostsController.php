@@ -9,12 +9,19 @@ class PostsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = Post::all();
+		if(Input::has('search')) 
+		{
+			$search = Input::get('search');
+			$posts = Post::where('title', 'LIKE', "%$search%")->paginate(4);
+
+		} else {
+			$posts = Post::paginate(4);
+		}	
+		
 		return View::make('posts.index')->with('posts', $posts);
 		//return View::make('posts.index')->with('posts', Post::all());
 		
 	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -22,11 +29,7 @@ class PostsController extends \BaseController {
 	 */
 	public function create()
 	{
-		// $post = new Post();
-		// $post->title = "title";
-		// $post->body = "body";
-		// $post->save();
-		return View::make('posts.create');
+		return View::make('posts.create-edit');
 	}
 	/**
 	 * Store a newly created resource in storage.
@@ -38,6 +41,7 @@ class PostsController extends \BaseController {
 		$validator = Validator::make(Input::all(), Post::$rules);
 		if($validator->fails())
 		{
+			Session::flash('errorMessage', 'There were errors submitting your form');
 			return Redirect::back()->withInput()->withErrors($validator);
 		
 		} else {
@@ -45,9 +49,8 @@ class PostsController extends \BaseController {
 			$post->title = Input::get('title');
 			$post->body = Input::get('body');
 			$post->save();
+			Session::flash('successMessage', 'Post created successfully.');
 			return Redirect::action('PostsController@index');
-			//Log::info(Input::all());
-			//return Redirect::back()->withInput();
 		}
 	}
 
@@ -72,7 +75,8 @@ class PostsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		return "Posts:edit()";
+		$post = Post::findOrFail($id);
+		return View::make('posts.create-edit')->with('post', $post);
 	}
 
 
@@ -84,7 +88,21 @@ class PostsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		return "Posts:update()";
+		$validator = Validator::make(Input::all(), Post::$rules);
+		if($validator->fails())
+		{
+			Session::flash('errorMessage', 'There was an error updating this post.');
+			return Redirect::back()->withInput()->withErrors($validator);
+		
+		} else {
+			$post = new Post();
+			$post->title = Input::get('title');
+			$post->body = Input::get('body');
+			$post->save();
+			Session::flash('successMessage', 'Post updated successfully.');
+			return Redirect::action('PostsController@index');
+		}
+
 	}
 
 
@@ -96,6 +114,9 @@ class PostsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		return "Posts::destroy()";
+		$post = Post::findOrFail($id);
+		$post->delete();
+		Session::flash('successMessage', 'Post deleted successfully.');
+		return Redirect::action('PostsController@index');
 	}
 }
