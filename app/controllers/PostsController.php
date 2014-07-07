@@ -2,25 +2,30 @@
 
 class PostsController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+	public function __construct()
+	{
+    	// call base controller constructor
+    	parent::__construct();
+
+    	// run auth filter before all methods on this controller except index and show
+    	$this->beforeFilter('auth', array('except' => array('index', 'show')));
+	}
+
 	public function index()
 	{
+		$posts = Post::with('user')->paginate(4);
+
 		if(Input::has('search')) 
 		{
 			$search = Input::get('search');
 			$posts = Post::where('title', 'LIKE', "%$search%")->paginate(4);
 
 		} else {
-			$posts = Post::paginate(4);
+			$posts = Post::orderBy('created_at', 'asc')->paginate(4);
 		}	
 		
 		return View::make('posts.index')->with('posts', $posts);
 		//return View::make('posts.index')->with('posts', Post::all());
-		
 	}
 	/**
 	 * Show the form for creating a new resource.
@@ -46,9 +51,16 @@ class PostsController extends \BaseController {
 		
 		} else {
 			$post = new Post();
+			$post->user_id = Auth::user()->id;
 			$post->title = Input::get('title');
 			$post->body = Input::get('body');
+			// $post->image = Input::file('img');
 			$post->save();
+
+			if (input::hasFile('image') && Input::file('image')->isValid()) {
+				$post->addUploadedImage(Input::file('image'));
+				$post->save();
+			}
 			Session::flash('successMessage', 'Post created successfully.');
 			return Redirect::action('PostsController@index');
 		}
@@ -96,6 +108,7 @@ class PostsController extends \BaseController {
 		
 		} else {
 			$post = new Post();
+			$post->user_id = Auth::user()->id;
 			$post->title = Input::get('title');
 			$post->body = Input::get('body');
 			$post->save();
