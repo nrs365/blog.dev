@@ -40,7 +40,7 @@ class HomeController extends BaseController {
 
 		if (Auth::attempt(array('email' => $email, 'password' => $password), Input::has('remember')))
 		{
-    		Session::flash('info_message', 'You have logged in successfully.');
+    		Session::flash('successMessage', 'You have logged in successfully.');
     		return Redirect::intended(action('PostsController@index'));
 		}
 		else
@@ -52,7 +52,7 @@ class HomeController extends BaseController {
 
 	public function logout() {
 		Auth::logout();
-		Session::flash('info_message', 'You have logged out.');
+		Session::flash('successMessage', 'You have logged out.');
 		return Redirect::action('PostsController@index');
 	}
 	
