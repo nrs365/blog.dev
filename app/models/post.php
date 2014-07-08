@@ -20,7 +20,17 @@ class Post extends BaseModel {
         $imageName = $this->id . '-' . $image->getClientOriginalName();
         $image->move($systemPath, $imageName);
         $this->img_path = '/' . $this->imgDir . '/' . $imageName;
-        
+
+    }
+
+    public function renderBody() {
+        // $Parsedown = new Parsedown();
+        // $post->body = $Parsedown->text($post->body);
+        // return Parsedown::instance()->parse($this->body);
+        $dirtyHTML = Parsedown::instance()->parse($this->body);
+        $config = HTMLPurifier_config::createDefault();
+        $purifier = new HTMLPurifier($config);
+        return $purifier->purify($dirtyHTML);
     }
 
 }
