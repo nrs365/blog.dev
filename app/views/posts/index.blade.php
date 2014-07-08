@@ -6,6 +6,7 @@
     <table class="table table-striped">
         <tr>
             <th>Title</th>
+            <th>Author Name</th>
             <th>Author Email</th>
             <th>Creation Date</th>
             <th>Actions</th>
@@ -13,6 +14,7 @@
         @foreach ($posts as $post)
         <tr>
             <td>{{ link_to_action('PostsController@show', $post->title, array($post->id)) }}</td>
+            <td>{{ $post->user->first_name }} {{ $post->user->last_name}}
             <td>{{ $post->user->email }}
             <td>{{ $post->created_at->format('l, F jS Y @ h:i:s A') }}</td>
             <td>{{ link_to_action('PostsController@edit', 'Edit', array($post->id), array('class' => 'btn btn-default btn-sm')) }}</td>
