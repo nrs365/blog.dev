@@ -33,4 +33,8 @@ class Post extends BaseModel {
         return $purifier->purify($dirtyHTML);
     }
 
+    public function canManagePost() {
+
+        return Auth::check() && (Auth::user()->is_admin || Auth::user()->id == $this->user_id);
+    }
 }
