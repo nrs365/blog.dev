@@ -22,10 +22,16 @@ class UserTableSeeder extends Seeder {
     {
         DB::table('users')->delete();
 
-        $user = new User();
-        $user->email = 'admin@codeup.com';
-        $user->password = Hash::make('adminPass123!');
-        $user->save();
+        for($i = 1; $i <= 2; $i++) 
+        {
+	        $user = new User();
+	        $user->email = $i . '@codeup.com';
+	        $user->password = Hash::make('adminPass123!');
+	        $user->first_name = "first" . $i;
+	        $user->last_name = "last" . $i;
+	        $user->is_admin = $i % 2;
+	        $user->save();
+    	}
    	}    
 }
 
