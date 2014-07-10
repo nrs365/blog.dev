@@ -1,35 +1,50 @@
-@extends('layouts.master')
+@extends('layouts.blog_master')
+
+@section('topscript')
+
+@stop
+       
 
 @section('content')
-    <h1>Posts</h1>
-    {{ link_to_action('PostsController@create', 'Create', null, array('class' => 'btn btn-success btn-lrg pull-right')) }}
-    <table class="table table-striped">
-        <tr>
-            <th>Title</th>
-            <th>Author Name</th>
-            <th>Author Email</th>
-            <th>Creation Date</th>
-            <th>Actions</th>
-        </tr>    
-        @foreach ($posts as $post)
-        <tr>
-            <td>{{ link_to_action('PostsController@show', $post->title, array($post->id)) }}</td>
-            <td>{{ $post->user->first_name }} {{ $post->user->last_name}}
-            <td>{{ $post->user->email }}
-            <td>{{ $post->created_at->format('l, F jS Y @ h:i:s A') }}</td>
-            <td>{{ link_to_action('PostsController@edit', 'Edit', array($post->id), array('class' => 'btn btn-default btn-sm')) }}</td>
-        </tr>
-        <br>       
-        @endforeach
-    </table>
-    {{ $posts->appends(['search' => Input::get('search')])->links() }}
-    <div>
-        {{ Form::open(array('action'=>'PostsController@index', 'class' => 'form-inline', 'method' => 'GET', 'files' => true)) }}
-            {{ Form::label('search') }}
-            {{ Form::text('search', null, array('placeholder' => 'Search Query', 'class' => 'form-control col-lg-4')) }}
-            {{ Form::submit('Search', array('class' => 'btn btn-success')) }} 
-        {{ Form::close() }} 
-        {{-- $posts->appends(['search' => Input::get('search')]) --}}
-    </div><br>
+<div class="container-fluid"> 
+    <div class="row">
+        <div class="col-md-8">   
+            <!-- add some padding somewhere around here -->
+            <h1>Posts</h1>
+            @if (Auth::check())
+                {{ link_to_action('PostsController@create', 'Create', null, array('class' => 'btn btn-success btn-lrg')) }}
+            @endif
+                @foreach ($posts as $post)
+                
+                    <h2>{{ link_to_action('PostsController@show', $post->title, array($post->id)) }}
+                    </h2>
+                    <p> By: {{ $post->user->first_name }} {{ $post->user->last_name}}</p>
+                    {{ $post->user->email }}
+                    <p>
+                    <span class="glyphicon glyphicon-time"></span>{{ $post->created_at->format('l, F jS Y @ h:i:s A') }}
+                    </p>
+                    <p>{{ $post->body }}</p>
+                    <hr>    
+                @endforeach
+                {{ $posts->appends(['search' => Input::get('search')])->links() }}
+        </div>            
+        <div class="col-md-4">
+            <div class="well">
+            <h4>Search</h4>
+                {{ Form::open(array('action'=>'PostsController@index', 'class' => 'form-inline', 'method' => 'GET', 'files' => true)) }}
+                <div class="input-group">
+                    {{-- Form::label('search', 'Search', array('class' => 'form-label')) --}}
+                    {{ Form::text('search', Input::get('search'), array('placeholder' => 'Search Query', 'class' => 'form-control')) }}
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    {{ Form::close() }} 
+                </div>
+                {{-- $posts->appends(['search' => Input::get('search')]) --}}
+            </div><br> 
+        </div>
+    </div>           
 
 @stop
