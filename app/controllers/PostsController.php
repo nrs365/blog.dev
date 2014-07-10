@@ -8,7 +8,7 @@ class PostsController extends \BaseController {
     	parent::__construct();
 
     	// run auth filter before all methods on this controller except index and show
-    	$this->beforeFilter('auth', array('except' => array('index', 'show')));
+    	$this->beforeFilter('auth', array('except' => array('index', 'show', 'destroy')));
 	}
 
 	public function index()
@@ -74,7 +74,7 @@ class PostsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$post = Post::find($id);
+		$post = Post::findOrFail($id);
 		return View::make('posts.show')->with('post', $post);
 	}
 
@@ -88,7 +88,14 @@ class PostsController extends \BaseController {
 	public function edit($id)
 	{
 		$post = Post::findOrFail($id);
-		return View::make('posts.create-edit')->with('post', $post);
+
+		if ($post->canManagePost()) {
+			$post = Post::findOrFail($id);
+			return View::make('posts.create-edit')->with('post', $post);
+		} else {	
+			Session::flash('errorMessage', 'You cannot update this post');
+			return Redirect::action('PostsController@index');
+		}
 	}
 
 
@@ -100,23 +107,29 @@ class PostsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$validator = Validator::make(Input::all(), Post::$rules);
-		if($validator->fails())
-		{
-			Session::flash('errorMessage', 'There was an error updating this post.');
-			return Redirect::back()->withInput()->withErrors($validator);
-		
-		} else {
-			$post = new Post();
-			$post->user_id = Auth::user()->id;
-			$post->title = Input::get('title');
-			$post->body = Input::get('body');
-			$post->save();
-			Session::flash('successMessage', 'Post updated successfully.');
-			return Redirect::action('PostsController@index');
-		}
+		$post = Post::findOrFail($id);
 
-	}
+		if ($post->canManagePost()) {
+			$validator = Validator::make(Input::all(), Post::$rules);
+			if($validator->fails())
+			{
+				Session::flash('errorMessage', 'There was an error updating this post.');
+				return Redirect::back()->withInput()->withErrors($validator);
+			
+			} else {
+				$post = new Post();
+				$post->user_id = Auth::user()->id;
+				$post->title = Input::get('title');
+				$post->body = Input::get('body');
+				$post->save();
+				Session::flash('successMessage', 'Post updated successfully.');
+				return Redirect::action('PostsController@index');
+			}			
+		} else {
+			Session::flash('errorMessage', 'You cannot update this post');
+			return Redirect::action('PostController@index');
+		}
+	}	
 
 
 	/**
@@ -128,8 +141,16 @@ class PostsController extends \BaseController {
 	public function destroy($id)
 	{
 		$post = Post::findOrFail($id);
-		$post->delete();
-		Session::flash('successMessage', 'Post deleted successfully.');
-		return Redirect::action('PostsController@index');
+
+		if ($post->canManagePost()) {
+
+			$post->delete();
+			Session::flash('successMessage', 'Post deleted successfully.');
+			return Redirect::action('PostsController@index');
+		
+		} else {
+			Session::flash('errorMessage', 'You cannot delete this post');
+			return Redirect::action('PostController@index');
+		}	
 	}
 }
