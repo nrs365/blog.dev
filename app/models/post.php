@@ -37,4 +37,15 @@ class Post extends BaseModel {
 
         return Auth::check() && (Auth::user()->is_admin || Auth::user()->id == $this->user_id);
     }
+
+    public static function findBySlug($slug) {
+        $post = self ::where('slug', $slug)->first();
+        return ($post == null) ? App::abort(404) : $post;
+    }
+
+    public function setSlugAttribute($value){
+        $value = str_replace(' ', '-', trim($this->title));
+        $this->attributes['slug'] = strtolower($value);
+
+    }
 }
