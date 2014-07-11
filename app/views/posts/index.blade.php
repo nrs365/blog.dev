@@ -10,13 +10,13 @@
     <div class="row">
         <div class="col-md-8">   
             <!-- add some padding somewhere around here -->
-            <h1>Posts</h1>
+            <h1>Blog Posts</h1>
             @if (Auth::check())
-                {{ link_to_action('PostsController@create', 'Create', null, array('class' => 'btn btn-success btn-lrg')) }}
+                {{ link_to_action('PostsController@create', 'Create', null, array('class' => 'btn btn-default btn-md')) }}
             @endif
                 @foreach ($posts as $post)
                 
-                    <h2>{{ link_to_action('PostsController@show', $post->title, array($post->id)) }}
+                    <h2>{{ link_to_action('PostsController@show', $post->title, $post->slug) }}
                     </h2>
                     <p> By: {{ $post->user->first_name }} {{ $post->user->last_name}}</p>
                     {{ $post->user->email }}

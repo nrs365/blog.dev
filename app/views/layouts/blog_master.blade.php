@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>My Blog</title>
+    <title>From Philosophy to Programming</title>
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -16,6 +16,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="/bootstrap-3.2.0/blog-home/css/bootstrap.min.css">
     <link rel="stylesheet" type="css" href="/bootstrap-3.2.0/css/demo.css"/>
+    <link href="/bootstrap-3.2.0/css/carousel.css" rel="stylesheet">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
@@ -38,34 +39,39 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">My blog</a>
+                <a class="navbar-brand" href="index.php">From Philosophy to Programming</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
                 <ul class="nav navbar-nav">
-                    <li class="{{ Request::is('portfolio') ? 'active' : '' }}"><a href="#portfolio">Portfolio</a>
+                    <li class="{{ Request::is('portfolio') ? 'active' : '' }}"><a href="/portfolio">Portfolio</a>
                     </li>
-                    <li class="{{ Request::is('resume') ? 'active' : '' }}"><a href="#resume">Resume</a>
+                    <li class="{{ Request::is('resume') ? 'active' : '' }}"><a href="resume">Resume</a>
                     </li>
-                    <li class="{{ Request::is('posts') ? 'active' : '' }}"><a href="#blog">Blog</a>
+                    <li class="{{ Request::is('posts') ? 'active' : '' }}"><a href="posts">Blog</a>
                     </li>    
-                    <li class="{{ Request::is('contact')  ? 'active' : ''}}"><a href="#contact">Contact</a>
-                    </li>
+                    <li class="{{ Request::is('contact')  ? 'active' : ''}}"><a href="contact">Contact</a>
+                    @if (Auth::check())
+                        <li class="right"><a href="{{ action('PostsController@create') }}">Create</a></li>
+                        <li class-"right"><a href="{{ action('HomeController@logout') }}">Logout</a></li>
+                    @else
+                        <li class="right"><a href="{{ action('HomeController@showLogin') }}">Login</a></li>
+                    @endif    
+                    
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
 </nav> 
 
-      @if (Auth::check())
-             {{{ Auth::user()->email }}}<br>
-             {{ link_to_action('PostsController@create', 'Create Post') }}<br>
-             {{ link_to_action('HomeController@logout', 'Log out') }}<br>
-        @else
-             {{ link_to_action('HomeController@showLogin', 'Login') }}<br>
-        @endif
+        
 
         @if (Session::has('successMessage'))
             <div class="alert alert-success">{{{ Session::get('successMessage') }}}</div>
@@ -75,8 +81,6 @@
         @endif  
 
     @yield('topscript')
-
-
 
     @yield('content')
 

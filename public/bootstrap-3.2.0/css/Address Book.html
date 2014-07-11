@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://codeup.dev/address_book.php -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Address Book</title>
+	<script src="./Address Book_files/jquery-1.11.0.min.js"></script>
+	<script src="./Address Book_files/jquery-migrate-1.2.1.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://codeup.dev/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://codeup.dev/css/journal_bootstrap.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="./Address Book_files/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>Address Book</h1>
+	
+		
+	
+	<table border="1">
+	<tbody><tr>
+		<th>Name</th>
+		<th>Address</th>
+		<th>City</th>
+		<th>State</th>
+		<th>Zip</th>
+		<th>Phone</th>
+		<th>Delete</th>
+	</tr>
+	<tr>
+																<td>testname1 testname2</td>
+					<td>teststreet</td>
+					<td>testcity</td>
+					<td>teststate</td>
+					<td>testzip</td>
+					<td></td>
+				<td><a href="http://codeup.dev/address_book.php?key=0">Delete</a></td>
+	</tr>
+																<tr><td>testing first name testing last name</td>
+					<td>testing address</td>
+					<td>testing city</td>
+					<td>testing state</td>
+					<td>testing zip</td>
+					<td></td>
+				<td><a href="http://codeup.dev/address_book.php?key=1">Delete</a></td>
+	</tr>
+																<tr><td>first last</td>
+					<td>teststreet</td>
+					<td>testcity</td>
+					<td>teststate</td>
+					<td>testzip</td>
+					<td></td>
+				<td><a href="http://codeup.dev/address_book.php?key=2">Delete</a></td>
+	</tr>
+										<tr><td>first last</td>
+					<td>teststreet</td>
+					<td>testcity</td>
+					<td>teststate</td>
+					<td>testzip</td>
+					<td>2105555555</td>
+				<td><a href="http://codeup.dev/address_book.php?key=3">Delete</a></td>
+	</tr>
+										<tr><td>first last</td>
+					<td>teststreet</td>
+					<td>testcity</td>
+					<td>teststate</td>
+					<td>testzip</td>
+					<td>2105555555</td>
+				<td><a href="http://codeup.dev/address_book.php?key=4">Delete</a></td>
+	</tr>
+										<tr><td>firstname lastname</td>
+					<td> address</td>
+					<td> city</td>
+					<td> state</td>
+					<td> zip</td>
+					<td> phone</td>
+				<td><a href="http://codeup.dev/address_book.php?key=5">Delete</a></td>
+	</tr>
+										<tr><td>first last</td>
+					<td>teststreet</td>
+					<td>testcity</td>
+					<td>teststate</td>
+					<td>testzip</td>
+					<td>2105555555</td>
+				<td><a href="http://codeup.dev/address_book.php?key=6">Delete</a></td>
+	</tr>
+										<tr><td>testing new</td>
+					<td>testing new</td>
+					<td>testing new</td>
+					<td>testing new</td>
+					<td>testing new</td>
+					<td>2105551111</td>
+				<td><a href="http://codeup.dev/address_book.php?key=7">Delete</a></td>
+	</tr>
+										<tr><td>testing</td>
+					<td>testing</td>
+					<td>testing</td>
+					<td>testing</td>
+					<td>testing</td>
+					<td></td>
+				<td><a href="http://codeup.dev/address_book.php?key=8">Delete</a></td>
+	</tr>
+			</tbody></table>
+
+	<form method="POST" action="./Address Book_files/Address Book.html">
+		<p>
+			<label for="name">Name: </label>
+				<input type="text" id="name" name="name">
+		</p>
+		<p>
+			<label for="address">Street Address: </label>
+				<input type="text" id="address" name="address">
+		</p>
+		<p>
+			<label for="city">City:  </label>
+				<input type="text" id="city" name="city">
+		</p>
+		<p>
+			<label for="state">State: </label>
+				<input type="text" id="state" name="state">
+		</p>	
+		<p>
+			<label for="zip">ZIP: </label>
+				<input type="text" id="zip" name="zip">	
+		</p>
+		<p>
+			<label for="phone">Phone: </label>
+				<input type="text" id="phone" name="phone">
+		</p>
+		<p>
+			<button type="submit" value="save_entry">Save Entry</button>
+		</p>
+	</form>
+
+	<form method="POST" enctype="multipart/form-data" action="./Address Book_files/Address Book.html">
+		<p>
+			<label for="upload">Upload: </label>
+				<input type="file" id="upload" name="upload">
+		</p>
+		<p>
+			<button type="submit">Upload File</button>
+		</p>
+	</form>
+
+
+</body></html>

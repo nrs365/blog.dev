@@ -1,21 +1,5 @@
 @extends('layouts.master')
 
-@section('topscript')
-<head>
-    <title>Resume page</title>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="/css/g1jquubbld/css/bootstrap.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="/js/bootstrap.min.js"></script>
-</head>
-@stop
-
 @section('content')
 <body>
     <!--fixed navigation bar at the top of the page -->
@@ -35,13 +19,13 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class>
-                            <a href="/portfolio">Home</a>
+                            <a href="{{{ action('HomeController@showPortfolio') }}}">Home</a>
                         </li>   
                         <li class="">
-                            <a href="/portfolio">Portfolio</a>
+                            <a href="{{{ action('HomeController@showPortfolio') }}}">Portfolio</a>
                         </li>   
                         <li class="active">
-                        <a href="/resume">Resume</a>
+                        <a href="{{{ action('HomeController@showResume') }}}">Resume</a>
                         </li>
                     <ul>
                 </div>

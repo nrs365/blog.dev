@@ -18,11 +18,11 @@ class HomeController extends BaseController {
 
 	public function showResume() {
 		$data = ['title' => 'resume page'];
-		return View::make('temp.resume')->with($data);
+		return View::make('posts.resume')->with($data);
 	}
 
 	public function showPortfolio() {
-		return View::make('temp.portfolio');
+		return View::make('posts.portfolio');
 	}
 
 	public function showLogin() {

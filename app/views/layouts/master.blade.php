@@ -7,7 +7,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/bootstrap-3.2.0/css/bootstrap.min.css">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="/bootstrap-3.2.0/css/journaltheme/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap-3.2.0/blog-home/css/bootstrap.min.css">
     <link rel="stylesheet" type="css" href="/bootstrap-3.2.0/css/demo.css" />
 
     <!-- Latest compiled and minified JavaScript -->
@@ -31,6 +31,7 @@
         @endif        
             
         @yield('content')
+        
         @yield('bottomscript')
    </div> 
 

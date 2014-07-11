@@ -6,7 +6,9 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"erusev/parsedown": "1.0.*",
-		"ezyang/htmlpurifier": "4.6.*"
+		"ezyang/htmlpurifier": "4.6.*",
+		"barryvdh/laravel-debugbar": "1.x",
+		"way/generators": "2.*"
 
 	},
 	"autoload": {

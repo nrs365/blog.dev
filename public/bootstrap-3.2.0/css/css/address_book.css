@@ -1,0 +1,17 @@
+/*Create an external stylesheet and link it to your todo list page.
+color of the headers on your page and make them underlined.
+background color of the page.
+list-style to something other than the default.
+font for the entire page.
+Continue experimenting with styles to increase the visual appeal of the todo list.
+When complete, save your files, commit the files to your git repository, and push to github.*/
+
+th {
+	color: #ccc;
+	text-decoration: underline;
+}
+
+element background-color {
+	color:#FFC370;
+}
+

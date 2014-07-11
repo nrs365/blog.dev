@@ -11,16 +11,8 @@
 |
 */
 Route::get('/', function (){
-    return View::make('temp.my_first_view');
+    return View::make('posts.carousel');
 });
-
-// Route::get('/resume', function () {
-//     return View::make('temp.resume');
-// });
-//
-// Route::get('/portfolio', function () {
-//     return View::make('temp.portfolio');
-// });
 
 Route::resource('/posts', 'PostsController');
 Route::get('/login', 'HomeController@showLogin');
@@ -37,8 +29,6 @@ Route::get('/portfolio', 'HomeController@showPortfolio');
 
 // Route::get('/', 'HomeControllers@showWelcome');
 Route::get('/sayhello/{name}', 'HomeController@sayHello');
-
-
 
 // Route::get('/orm-test', function() {
 //     $post2 = new Post();

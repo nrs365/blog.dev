@@ -1,0 +1,9 @@
+h1 {
+	color: blue;
+	text-decoration: underline;
+}
+
+p {
+	text-decoration: line-through;
+	color: red;
+}

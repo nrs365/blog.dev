@@ -54,6 +54,18 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+
+Route::filter('post.protect', function($route) {
+
+    // retrieve post id from route (named based on table)
+    $id = $route->getParameter('posts');
+
+    // lookup the post
+    $post = Post::findOrFail($id);
+
+    // redirect if user cannot manage the post
+    if (!$post->canManagePost()) return Redirect::action('PostsController@show', $id);
+});
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
