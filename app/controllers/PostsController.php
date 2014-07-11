@@ -92,14 +92,8 @@ class PostsController extends \BaseController {
 	public function edit($id)
 	{
 		$post = Post::findOrFail($id);
+		return View::make('posts.create-edit')->with('post', $post);
 
-		if ($post->canManagePost()) {
-			$post = Post::findOrFail($id);
-			return View::make('posts.create-edit')->with('post', $post);
-		} else {	
-			Session::flash('errorMessage', 'You cannot update this post');
-			return Redirect::action('PostsController@index');
-		}
 	}
 
 
@@ -112,28 +106,23 @@ class PostsController extends \BaseController {
 	public function update($id)
 	{
 		$post = Post::findOrFail($id);
-
-		if ($post->canManagePost()) {
-			$validator = Validator::make(Input::all(), Post::$rules);
-			if($validator->fails())
-			{
-				Session::flash('errorMessage', 'There was an error updating this post.');
-				return Redirect::back()->withInput()->withErrors($validator);
-			
-			} else {
-				$post = new Post();
-				$post->user_id = Auth::user()->id;
-				$post->title = Input::get('title');
-				$post->body = Input::get('body');
-				$post->save();
-				Session::flash('successMessage', 'Post updated successfully.');
-				return Redirect::action('PostsController@show', $post->slug);
-			}			
+		$validator = Validator::make(Input::all(), Post::$rules);
+		if($validator->fails())
+		{
+			Session::flash('errorMessage', 'There was an error updating this post.');
+			return Redirect::back()->withInput()->withErrors($validator);
+		
 		} else {
-			Session::flash('errorMessage', 'You cannot update this post');
-			return Redirect::action('PostController@index');
-		}
-	}	
+			$post = new Post();
+			$post->user_id = Auth::user()->id;
+			$post->title = Input::get('title');
+			$post->body = Input::get('body');
+			$post->save();
+			Session::flash('successMessage', 'Post updated successfully.');
+			return Redirect::action('PostsController@show', $post->slug);
+		}			
+	} 
+	
 
 
 	/**
@@ -146,15 +135,8 @@ class PostsController extends \BaseController {
 	{
 		$post = Post::findOrFail($id);
 
-		if ($post->canManagePost()) {
-
-			$post->delete();
-			Session::flash('successMessage', 'Post deleted successfully.');
-			return Redirect::action('PostsController@index');
-		
-		} else {
-			Session::flash('errorMessage', 'You cannot delete this post');
-			return Redirect::action('PostController@index');
-		}	
+		$post->delete();
+		Session::flash('successMessage', 'Post deleted successfully.');
+		return Redirect::action('PostsController@index');	
 	}
 }
