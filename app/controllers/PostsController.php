@@ -9,6 +9,9 @@ class PostsController extends \BaseController {
 
     	// run auth filter before all methods on this controller except index and show
     	$this->beforeFilter('auth', array('except' => array('index', 'show', 'destroy')));
+
+    	// run post protect filter to make sure users can only manage their own posts
+		$this->beforeFilter('post.protect', array('only' => array('edit', 'update', 'destroy')));
 	}
 
 	public function index()
@@ -72,9 +75,10 @@ class PostsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-		$post = Post::findOrFail($id);
+		//$post = Post::findOrFail($id);
+		$post = Post::findBySlug($slug);
 		return View::make('posts.show')->with('post', $post);
 	}
 
@@ -123,7 +127,7 @@ class PostsController extends \BaseController {
 				$post->body = Input::get('body');
 				$post->save();
 				Session::flash('successMessage', 'Post updated successfully.');
-				return Redirect::action('PostsController@index');
+				return Redirect::action('PostsController@show', $post->slug);
 			}			
 		} else {
 			Session::flash('errorMessage', 'You cannot update this post');
