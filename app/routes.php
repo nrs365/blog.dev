@@ -10,9 +10,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('/', function (){
-    return View::make('posts.carousel');
-});
+Route::get('/', 'HomeController@showHome');
+route::get('/oauth', 'HomeController@oauth');
+route::get('/callback', 'HomeController@callback');
+
 
 Route::resource('/posts', 'PostsController');
 Route::get('/login', 'HomeController@showLogin');
